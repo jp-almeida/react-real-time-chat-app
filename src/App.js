@@ -9,7 +9,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 
 firebase.initializeApp({
-  apiKey: "AIzaSyD0zwuAOZ5GJz7yGsQibKUztwuUVS8MHD4",
+  apiKey: "hidden-api-key",
   authDomain: "zipzap-2e0f8.firebaseapp.com",
   projectId: "zipzap-2e0f8",
   storageBucket: "zipzap-2e0f8.appspot.com",
