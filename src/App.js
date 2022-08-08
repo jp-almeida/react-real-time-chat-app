@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/firestore';
@@ -61,9 +61,13 @@ function SignOut() {
 function ChatRoom() {
   const dummy = useRef()
   const messagesRef = firestore.collection('messages')
-  const query = messagesRef.orderBy('createdAt').limit(25)
+  const query = messagesRef.orderBy('createdAt')
   const [messages] = useCollectionData(query, { idField: 'id' })
-  const[formValue, setFormValue] = useState('')
+  const [formValue, setFormValue] = useState('')
+  
+  const scrollToBottom = () => { 
+    dummy.current.scrollIntoView({ behavior: 'smooth' })
+  }
   
   const sendMessage = async (e) => {
     e.preventDefault()
@@ -75,8 +79,9 @@ function ChatRoom() {
       photoURL
     })
     setFormValue('')
-    dummy.current.scrollIntoView({ behavior: 'smooth' })
+    //scrollToBottom()
   }
+  useEffect(scrollToBottom, [messages]);
   return (
     <>
       <main>
@@ -87,7 +92,7 @@ function ChatRoom() {
       <form onSubmit={sendMessage}>
 
         <input value={formValue} onChange={ (e) => setFormValue(e.target.value)} placeholder="Mensagem"/>
-        <button type='submit'>🎈</button>
+        <button type='submit' disabled={formValue? false : true}>🎈</button>
 
       </form>
     </>
